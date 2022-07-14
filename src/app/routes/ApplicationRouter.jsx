@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate, Routes, Route } from "react-router-dom";
 import { AppPage } from '../pages'
 
-export const AppRouter = () => {
+export const ApplicationRouter = () => {
   return (
     <>
     <Routes>
