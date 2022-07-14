@@ -1,6 +1,9 @@
+import { Typography } from "@mui/material"
 
 export const AppPage = () => {
   return (
-    <div>AppPage</div>
+  <>
+  <Typography variant="p">AppPage</Typography>
+  </>
   )
 }
