@@ -1,10 +1,17 @@
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { Google } from '@mui/icons-material';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { AccountCircle, Google } from '@mui/icons-material';
+import { Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import KeyIcon from '@mui/icons-material/Key';
+
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,52 +25,51 @@ const Item = styled(Paper)(({ theme }) => ({
 export const LoginPage = () => {
   return (
     <AuthLayout>
-      <form>
-          <Grid container>
+     
+    <Card sx={{ minWidth: 100, maxWidth: 450 }}>
+    <form>
+      <CardContent>
+      <Grid container>
             <Grid item xs={ 12 } sx={{ mt: 2 }}>
-              <TextField 
-                label="Correo" 
-                type="email" 
-                placeholder='correo@google.com' 
-                fullWidth
-              />
+              <Typography variant="h5" component="div" align='center' color="primary">
+                Sign in
+              </Typography>
             </Grid>
-
             <Grid item xs={ 12 } sx={{ mt: 2 }}>
-              <TextField 
-                label="Contraseña" 
-                type="password" 
-                placeholder='Contraseña' 
-                fullWidth
-              />
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                <TextField id="input-with-sx" label="Email" type="email" placeholder='Email' variant="standard" fullWidth />
+              </Box>
             </Grid>
-            
-            <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>
+            <Grid item xs={ 12 } sx={{ mt: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                <TextField id="input-with-sx" label="Password" type="password" placeholder='Password' variant="standard" fullWidth />
+              </Box>
+            </Grid>
+              
+            <Grid container spacing={ 3 } sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={ 12 } sm={ 6 }>
                 <Button variant='contained' fullWidth>
-                  Login
+                  Sign up
                 </Button>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button variant='contained' fullWidth>
+                <Button variant="contained" fullWidth>
                   <Google />
-                  <Typography sx={{ ml: 1 }}>Google</Typography>
+                  <Typography sx={{ ml: 1 }}></Typography>
                 </Button>
               </Grid>
             </Grid>
-
-
-            <Grid container direction='row' justifyContent='end'>
-              {/* <Link component={ RouterLink } color='inherit' to="/auth/register">
-                Crear una cuenta
-              </Link> */}
+            <Grid item xs={ 12 } sm={ 6 } >
+              <NavLink to="/auth/register">
+                Sign up
+              </NavLink>
             </Grid>
-
           </Grid>
-
-
-        </form>
-
+          </CardContent>
+      </form>
+    </Card>
     </AuthLayout>
   )            
 }
