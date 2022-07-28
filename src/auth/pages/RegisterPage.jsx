@@ -36,6 +36,12 @@ export const RegisterPage = () => {
                  <TextField id="input-with-sx" label="Password" type="password" placeholder='Password' variant="standard" fullWidth />
                </Box>
              </Grid>
+             <Grid item xs={ 12 } sx={{ mt: 2 }}>
+               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                 <KeyIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+                 <TextField id="input-with-sx" label="Password" type="password" placeholder='Password' variant="standard" fullWidth />
+               </Box>
+             </Grid>
                
              <Grid container spacing={ 5 } sx={{ mb: 2, mt: 1 }}>
                <Grid item xs={ 12 } sm={ 6 }>
