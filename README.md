@@ -21,4 +21,12 @@ para instalar material ui:
 	/>
 
 	- yarn add @mui/icons-material
- 
+
+
+	-----
+	Redux
+		- https://redux-toolkit.js.org/tutorials/quick-start
+
+	para instalar redux 
+		 - @reduxjs/toolkit react-redux
+	
