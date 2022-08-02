@@ -1,5 +1,5 @@
 import { signInWithGoogle } from '../../firestore/providers';
-import { verifyCredentials } from './authSlice';
+import { login, logout, verifyCredentials } from './authSlice';
 
 export const checkingAuthentication = ( email, password ) => {
     return async ( dispatch ) => {
@@ -9,8 +9,12 @@ export const checkingAuthentication = ( email, password ) => {
 
 export const checkingGoogleAuthentication = ( email, password ) => {
     return async ( dispatch ) => {
-        dispatch( verifyCredentials() );
+        await dispatch( verifyCredentials() );
         const result = await signInWithGoogle();
-        console.log( result );
+
+        if(!result.ok) return dispatch( logout( result.errorMessage ) ) 
+
+        dispatch( login( result ));
+        // console.log( result );
     }
 }

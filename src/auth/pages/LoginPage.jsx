@@ -7,11 +7,12 @@ import { AccountCircle, Google } from '@mui/icons-material';
 import { Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 
+import { useMemo } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import KeyIcon from '@mui/icons-material/Key';
 import { useForm } from '../../hooks/useForm';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkingAuthentication, checkingGoogleAuthentication } from '../../store/auth/thunks';
 
 
@@ -27,7 +28,14 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const LoginPage = () => {
 
+  const { status } = useSelector( state => state.auth );
+  
+  console.log(status);
+
   const dispatch = useDispatch();
+
+  const isAuthenticating = useMemo( () => status === 'Verifying...', [status]);
+  console.log("auth: " + isAuthenticating);
 
   const { email, password, onInputChange } = useForm({
     email: 'test@test.com',
@@ -93,12 +101,12 @@ export const LoginPage = () => {
               
             <Grid container spacing={ 3 } sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button onClick={ onSubmit } variant='contained' fullWidth>
+                <Button onClick={ onSubmit } variant='contained' disabled={ isAuthenticating } fullWidth>
                   Sign up
                 </Button>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button onClick={ onGoogleSignIn } variant="contained" fullWidth>
+                <Button onClick={ onGoogleSignIn } variant="contained" disabled={ isAuthenticating } fullWidth>
                   <Google />
                   <Typography sx={{ ml: 1 }}></Typography>
                 </Button>
