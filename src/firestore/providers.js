@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { firebaseAuth } from './config'
 
 const googleProvider = new GoogleAuthProvider();
@@ -31,7 +31,68 @@ export const signInWithGoogle = async () => {
             errorMessage
         }
     }
+}
+export const registerUserWithEmailPassword = async ({ email, password, displayName}) => {
 
+    const errorMessage = '';
 
+    try {
+        console.log(email + password + displayName);
 
+        const result = await createUserWithEmailAndPassword( firebaseAuth, email, password );
+        
+        await updateProfile(firebaseAuth.currentUser, { displayName });
+        
+        const { uid, photoURL } = result.user;
+
+        return {
+            ok: true,
+            displayName,
+            email,
+            photoURL,
+            uid,
+            errorMessage
+        }
+    } catch (error) {
+        console.log("ENTRÓ AL CATCH");
+        console.log(error);
+        return {
+            ok: false,
+            error
+        }
+    }
+}
+
+export const loginWithEmailPassword = async ({ email, password}) => {
+
+    const errorMessage = '';
+    
+    const email2 = email;
+
+    try {
+
+        console.log("< - LOGIN - >");
+
+        const result = await signInWithEmailAndPassword( firebaseAuth, email2, password );
+                
+        const { uid, photoURL, displayName, email } = result.user;
+        
+        console.log(result.user);
+
+        return {
+            ok: true,
+            displayName,
+            email,
+            photoURL,
+            uid,
+            errorMessage
+        }
+    } catch (error) {
+        console.log("ENTRÓ AL CATCH");
+        console.log(error);
+        return {
+            ok: false,
+            error
+        }
+    }
 }

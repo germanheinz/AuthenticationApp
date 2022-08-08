@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { AccountCircle, Google } from '@mui/icons-material';
-import { Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 
 import { useMemo } from 'react';
@@ -13,7 +13,7 @@ import CardContent from '@mui/material/CardContent';
 import KeyIcon from '@mui/icons-material/Key';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkingAuthentication, checkingGoogleAuthentication } from '../../store/auth/thunks';
+import { checkingAuthentication, checkingGoogleAuthentication, startLoginWithGoogle } from '../../store/auth/thunks';
 
 
 
@@ -25,28 +25,32 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+const formValitations = {
+  email:[ (value) => value.includes('@'), 'Error: email is required'],
+  password:[ (value) => value.length >= 4, 'Error: password is required' ] 
+}
+
 
 export const LoginPage = () => {
 
-  const { status } = useSelector( state => state.auth );
+  const { status, errorMessage } = useSelector( state => state.auth );
   
-  console.log(status);
+  // console.log(status);
 
   const dispatch = useDispatch();
 
   const isAuthenticating = useMemo( () => status === 'Verifying...', [status]);
-  console.log("auth: " + isAuthenticating);
+  // console.log("auth: " + isAuthenticating);
 
   const { email, password, onInputChange } = useForm({
     email: 'test@test.com',
     password: '123456'
-  })
+  }, formValitations)
   
   const onSubmit = ( event ) => {
     event.preventDefault();
-    console.log("Click Sign up");
     console.log({email, password});
-    dispatch( checkingAuthentication("test" , "test") )
+    dispatch( startLoginWithGoogle({email, password}) );
   }
 
   const onGoogleSignIn = () => {
@@ -98,15 +102,24 @@ export const LoginPage = () => {
                   />
               </Box>
             </Grid>
+            <Grid 
+                  item 
+                  xs={ 12 } 
+                  sm={ 12 }
+                  display={ !!errorMessage ? '' : 'none' }
+
+                  >
+                <Alert severity='error' >{ errorMessage }</Alert>
+               </Grid>
               
             <Grid container spacing={ 3 } sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button onClick={ onSubmit } variant='contained' disabled={ isAuthenticating } fullWidth>
+                <Button onClick={ onSubmit } variant='contained' fullWidth>
                   Sign up
                 </Button>
               </Grid>
               <Grid item xs={ 12 } sm={ 6 }>
-                <Button onClick={ onGoogleSignIn } variant="contained" disabled={ isAuthenticating } fullWidth>
+                <Button onClick={ onGoogleSignIn } variant="contained" fullWidth>
                   <Google />
                   <Typography sx={{ ml: 1 }}></Typography>
                 </Button>
