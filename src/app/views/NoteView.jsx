@@ -1,8 +1,16 @@
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
-
+import { useDispatch } from 'react-redux';
+import { startNewNote } from '../../store/journalSlice/thunks';
 
 export const NoteView = () => {
+
+    const dispatch = useDispatch();
+
+    const onClickNewNote = () => {
+        dispatch( startNewNote());
+    }
+
   return (
     <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1 }}>
         <Grid item>
@@ -37,6 +45,8 @@ export const NoteView = () => {
 
         {/* Image gallery */}
         {/* <ImageGallery /> */}
+
+        <button onClick={onClickNewNote}> guardar </button>
 
     </Grid>
   )
