@@ -1,14 +1,20 @@
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startNewNote } from '../../store/journalSlice/thunks';
+import { NothingSelectedView } from './NothingSelectedView';
 
 export const NoteView = () => {
 
     const dispatch = useDispatch();
 
+    const { isSaving, activeNote } = useSelector( state => state.journal);
+
     const onClickNewNote = () => {
         dispatch( startNewNote());
+        
+        console.log("isSaving: -> ");
+        console.log(isSaving);
     }
 
   return (
@@ -43,8 +49,10 @@ export const NoteView = () => {
             />
         </Grid>
 
-        {/* Image gallery */}
-        {/* <ImageGallery /> */}
+        {
+            (!!activeNote) ? <h2>hola</h2> : <NothingSelectedView/> 
+        }
+        
 
         <button onClick={onClickNewNote}> guardar </button>
 
