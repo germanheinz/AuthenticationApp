@@ -1,7 +1,9 @@
 import React from 'react'
 import { collection, doc, setDoc } from 'firebase/firestore/lite';
 import { firebaseDB } from '../../firestore/config';
-import { addNewEmptyNote, savingNewNote, setActiveNote } from './journalSlice';
+import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes } from './journalSlice';
+import { async } from '@firebase/util';
+import { loadNotes } from '../../helpers/index';
 
 export const startNewNote = () => {
     return async ( dispatch, getState ) => {
@@ -30,4 +32,17 @@ export const startNewNote = () => {
 
     
     }
+
+}
+export const getNotes = () => {
+ return async(dispatch, getState) => {
+
+    const { uid } = getState().auth;
+
+    dispatch( setNotes(await loadNotes( uid )) );
+    
+
+ }
+
+    
 }
