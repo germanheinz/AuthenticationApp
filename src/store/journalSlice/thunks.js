@@ -13,10 +13,12 @@ export const startNewNote = () => {
         const { uid } = getState().auth;
         console.log(uid);
 
+        const dateToDate = "2020-06-19";
+
         const newNote = {
             title: '',
             body: '',
-            date: new Date().getDate()
+            date: dateToDate 
         }
     
         const newDoc = doc( collection(firebaseDB, `${uid}/journal/notes`));

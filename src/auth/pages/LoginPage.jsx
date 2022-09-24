@@ -30,6 +30,10 @@ const formValitations = {
   password:[ (value) => value.length >= 4, 'Error: password is required' ] 
 }
 
+const formData = {
+  email: '',
+  password: ''
+}
 
 export const LoginPage = () => {
 
@@ -42,10 +46,7 @@ export const LoginPage = () => {
   const isAuthenticating = useMemo( () => status === 'Verifying...', [status]);
   // console.log("auth: " + isAuthenticating);
 
-  const { email, password, onInputChange } = useForm({
-    email: 'test@test.com',
-    password: '123456'
-  }, formValitations)
+  const { email, password, onInputChange } = useForm(formData);
   
   const onSubmit = ( event ) => {
     event.preventDefault();

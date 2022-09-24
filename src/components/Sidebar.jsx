@@ -2,15 +2,17 @@ import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIco
 import { TurnedInNot } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
+import { SidebarItem } from './SidebarItem';
+import { map } from '@firebase/util';
 
 
 export const SideBar = ({ drawerWidth = 240 }) => {
 
 
     const { name } = useSelector( state => state.auth);
+    const { notes } = useSelector( state => state.journal);
 
 
-    // console.log(state.name);
 
   return (
     <Box
@@ -34,19 +36,9 @@ export const SideBar = ({ drawerWidth = 240 }) => {
 
             <List>
                 {
-                    ['Enero','Febrero','Marzo','Abril'].map( text => (
-                        <ListItem key={ text } disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    <TurnedInNot />
-                                </ListItemIcon>
-                                <Grid container>
-                                    <ListItemText primary={ text } />
-                                    <ListItemText secondary={ 'Exercitation cillum irure elit consectetur.' } />
-                                </Grid>
-                            </ListItemButton>
-                        </ListItem>
-                    ))
+                    notes.map( note => (
+                      <SidebarItem key={ note.id } note={ note } />
+                    ))  
                 }
             </List>
 

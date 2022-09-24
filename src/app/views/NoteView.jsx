@@ -3,12 +3,16 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { startNewNote } from '../../store/journalSlice/thunks';
 import { NothingSelectedView } from './NothingSelectedView';
+import { useForm } from '../../hooks/useForm';
+import { useMemo } from 'react';
 
 export const NoteView = () => {
 
     const dispatch = useDispatch();
 
-    const { isSaving, activeNote } = useSelector( state => state.journal);
+    const { activeNote, isSaving } = useSelector( state => state.journal);
+
+    const { body, title, formState, onInputChange } = useForm( activeNote );
 
     const onClickNewNote = () => {
         dispatch( startNewNote());
@@ -37,6 +41,9 @@ export const NoteView = () => {
                 placeholder="Ingrese un título"
                 label="Título"
                 sx={{ border: 'none', mb: 1 }}
+                name="title"
+                value={title}
+                onChange={onInputChange}
             />
 
             <TextField 
@@ -46,6 +53,9 @@ export const NoteView = () => {
                 multiline
                 placeholder="¿Qué sucedió en el día de hoy?"
                 minRows={ 5 }
+                name="body"
+                value={body}
+                onChange={onInputChange}
             />
         </Grid>
 
