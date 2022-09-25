@@ -1,7 +1,7 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 import { TurnedInNot } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SidebarItem } from './SidebarItem';
 import { map } from '@firebase/util';
 
@@ -11,6 +11,12 @@ export const SideBar = ({ drawerWidth = 240 }) => {
 
     const { name } = useSelector( state => state.auth);
     const { notes } = useSelector( state => state.journal);
+
+    useEffect(() => {
+        console.log("cambió");
+ 
+    }, [notes])
+    
 
 
 
